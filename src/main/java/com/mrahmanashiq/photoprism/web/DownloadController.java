@@ -16,7 +16,7 @@ public class DownloadController {
     private PhotoprismService photoprismService;
 
     @GetMapping("/download/{id}")
-    public ResponseEntity<byte[]> download(@PathVariable String id) {
+    public ResponseEntity<byte[]> download(@PathVariable Integer id) {
         PhotoprismModel photo = photoprismService.get(id);
         if (photo == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Photo not found");

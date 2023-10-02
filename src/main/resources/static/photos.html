@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Photo Gallery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <style>
+        body {
+            padding: 2rem;
+        }
+
+        .photo-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .photo-item {
+            width: calc(33.33% - 20px); /* Adjust the width as needed */
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .photo-item img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .download-button {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Photo Gallery</h2>
+    <div class="photo-list" id="photo-list">
+        <!-- Photos will be dynamically added here using JavaScript -->
+    </div>
+</div>
+
+<script>
+    fetch('http://localhost:8080/photos')
+        .then(response => response.json())
+        .then(data => {
+            const photoList = document.getElementById('photo-list');
+
+            data.forEach(photo => {
+                const photoItem = document.createElement('div');
+                photoItem.className = 'photo-item';
+
+                const image = document.createElement('img');
+                image.src = `http://localhost:8080/photos/${photo.fileName}`;
+                image.alt = photo.fileName;
+
+                const downloadButton = document.createElement('a');
+                downloadButton.href = `http://localhost:8080/download/${photo.id}`;
+                downloadButton.textContent = 'Download';
+                downloadButton.className = 'download-button';
+
+                photoItem.appendChild(image);
+                photoItem.appendChild(downloadButton);
+                photoList.appendChild(photoItem);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching photos:', error);
+        });
+</script>
+</body>
+</html>

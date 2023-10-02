@@ -2,10 +2,14 @@ package com.mrahmanashiq.photoprism.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotEmpty;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
+@Table("PHOTOPRISM")
 public class PhotoprismModel {
 
-    private String id;
+    @Id
+    private int id;
 
     @NotEmpty
     private String fileName;
@@ -18,16 +22,11 @@ public class PhotoprismModel {
     public PhotoprismModel() {
     }
 
-    public PhotoprismModel(String id, String fileName) {
-        this.id = id;
-        this.fileName = fileName;
-    }
-
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
